@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 import requests
 import time
 
@@ -15,10 +13,11 @@ passwords_wordlist = [
     "kurdish123"
 ]
 
-print(f"دەستپێکرنا تێستکرنێ بۆ یوزەرێ: {username_to_test}\n" + "="*40)
+print("Testing starting for: " + str(username_to_test))
+print("="*40)
 
 for index, pwd in enumerate(passwords_wordlist, 1):
-    print(f"تاقیکرنا {index}: [{pwd}]")
+    print("Attempt " + str(index) + ": " + str(pwd))
     
     payload = {'username': username_to_test, 'password': pwd}
     
@@ -27,16 +26,16 @@ for index, pwd in enumerate(passwords_wordlist, 1):
         res_data = response.json()
 
         if response.status_code == 200:
-            print(f"\n[✓] سەرکەوتووبوو! {res_data['message']}")
+            print("\n[!] Success: " + str(res_data['message']))
             break
         elif response.status_code == 429:
-            print(f"\n[!] ڕاوەستیا: {res_data['message']}")
+            print("\n[!] Blocked: " + str(res_data['message']))
             break
         else:
-            print(f"[✗] ئەنجام: {res_data['message']}")
+            print("[x] Result: " + str(res_data['message']))
 
     except Exception as e:
-        print(f"[!] ئاریشە د پەیوەندیا سێرڤەری دا هەیە: {e}")
+        print("[!] Connection Error: " + str(e))
         break
 
     time.sleep(1)
